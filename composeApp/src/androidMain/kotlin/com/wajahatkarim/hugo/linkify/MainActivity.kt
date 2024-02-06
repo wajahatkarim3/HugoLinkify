@@ -1,6 +1,7 @@
 package com.wajahatkarim.hugo.linkify
 
 import App
+import LinkifyView
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,7 +13,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            App()
+            LinkifyView()
         }
     }
 }

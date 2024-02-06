@@ -39,3 +39,6 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
 }
+dependencies {
+    implementation(libs.androidx.ui.android)
+}

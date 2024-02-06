@@ -56,6 +56,7 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(projects.shared)
+//            implementation("io.coil-kt.coil3:coil-compose:3.0.0-SNAPSHOT")
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -94,6 +95,7 @@ android {
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
+//        implementation("io.ktor:ktor-client-okhttp:2.3.7")
     }
 }
 
