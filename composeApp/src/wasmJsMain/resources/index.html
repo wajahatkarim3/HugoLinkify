@@ -2,11 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Compose App</title>
-    <script type="application/javascript" src="skiko.js"></script>
-    <script type="application/javascript" src="composeApp.js"></script>
+    <title>Link Cards - Medium like Link Previews in Hugo Sites</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="blogcard.css">
 </head>
 <body>
-<canvas id="ComposeTarget"></canvas>
+<div class="slider-content">
+    <div class="slider-wrapper">
+        <div class="slider-container">
+            <div class="slide active" data-order="1">
+                <div class="slide-content txt">
+                    <div class="txt-wrapper">
+                        <h2>Link Cards</h2>
+                        <span class="phone">Medium like Link Previews in Hugo Sites</span>
+                        <p class="excerpt" style="color: #333333">Link Cards lets you add link previews like Medium.com in your Hugo generated static websites.<br>
+                            <br><b>Here's how it works:</b><br>
+                        <ul>
+                            <li>1. Copy this shortcode into your website's shortcodes.</li>
+                            <li>2. Use this website to generate preview link card of any given URL.</li>
+                            <li>3. Copy the new code of the given URL into your blog posts.</li>
+                            <li>4. You're done!</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+                <div class="slide-content img">
+                    <div>
+                        <label>The URL for which you want Link Card preview.</label>
+                        <input type="text" id="input_url" placeholder="https://...">
+                        <input type="submit" id="btn_create_card" value="Create Link Card">
+                    </div>
+
+                    <div class="blog-card">
+                        <div class="meta">
+                            <div class="photo" id="photo" style="background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-1.jpg)"></div>
+                        </div>
+                        <div id="description" class="description">
+                            <h1 id="title">Your Blog Post Title</h1>
+                            <p id="summary"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum dolorum architecto obcaecati enim dicta praesentium, quam nobis! Neque ad aliquam facilis numquam. Veritatis, sit.</p>
+                            <h2 id="domain">wajahatkarim.com</h2>
+                        </div>
+                    </div>
+
+                    <label id="linkcard_code" class="linkcard-label">The LinkCard Code will be generated here.</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="social-wrapper">
+            <ul>
+                <li><a href="https://twitter.com/WajahatKarim" target="_blank">Twitter</a></li>
+                <li><a href="https://github.com/wajahatkarim3" target="_blank">Github</a></li>
+                <li><a href="https://wajahatkarim.com" target="_blank">Website</a></li>
+            </ul>
+        </div>
+        <div class="language-wrapper">
+            Built with ❤ by <a href="https://wajahatkarim.com"><b>Wajahat Karim</b></a>
+        </div>
+    </div>
+</div>
+<script src="composeApp.js"></script>
 </body>
+
 </html>
