@@ -13,10 +13,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,13 +30,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.NativeKeyEvent
+import androidx.compose.ui.input.key.isCtrlPressed
+import androidx.compose.ui.input.key.isMetaPressed
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import components.CustomTextField
+import data.URLConstants
 import data.UrlPreview
+import io.ktor.http.Url
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.skiko.ClipboardManager
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -59,6 +77,7 @@ fun LinkifySection(
     modifier: Modifier
 ) {
     var txtUrl by remember { mutableStateOf("") }
+    var isValidUrl by remember { mutableStateOf(true) }
     var previewImage by remember { mutableStateOf("") }
     var previewTitle by remember { mutableStateOf("") }
     var previewDescription by remember { mutableStateOf("") }
@@ -83,16 +102,37 @@ fun LinkifySection(
         OutlinedTextField(
             value = txtUrl,
             modifier = Modifier.fillMaxWidth()
-                .padding(top = 4.dp),
+                .padding(top = 4.dp)
+                .onKeyEvent { event ->
+                    println(event.isMetaPressed)
+                    if (event.isCtrlPressed && event.key == Key.V) {
+                        println(event.type)
+                        return@onKeyEvent true
+                    }
+                    else if (event.isMetaPressed && event.key == Key.V) {
+                        println(event.type)
+                        return@onKeyEvent true
+                    }
+                    false
+                },
             onValueChange = { txtUrl = it },
             placeholder = { Text(text = "https://...") },
-            singleLine = true
+            singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            isError = isValidUrl.not()
         )
 
         Button(
             onClick = {
+                isValidUrl = URLConstants.isValidUrl(txtUrl)
+                if (txtUrl.isEmpty() || URLConstants.isValidUrl(txtUrl).not()) {
+                    return@Button
+                }
+
                 coroutineScope.launch {
-                    txtUrl = "https://wajahatkarim.com/2022/11/reduce-screen-time-social-life/"
                     val urlPreviewData = UrlPreview.fetchData(txtUrl)
 
                     urlPreviewData?.let {
