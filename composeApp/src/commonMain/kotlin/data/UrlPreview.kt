@@ -86,8 +86,8 @@ object UrlPreview {
 
             val result = UrlPreviewData(
                 host = previewHost,
-                title = previewTitle,
-                description = previewDescription,
+                title = previewTitle.substring(0..50),          // SEO title should be 50-60 chars
+                description = previewDescription.substring(0..160), // SEO desc should be max 160 chars
                 thumbnailUrl = previewImage
             )
             // println(result)
