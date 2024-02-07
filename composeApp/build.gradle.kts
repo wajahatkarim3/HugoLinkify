@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -56,6 +57,9 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(projects.shared)
+            implementation(libs.kotlinx.coroutines)
+            implementation(libs.bundles.ktor.common)
+            implementation("com.mohamedrejeb.ksoup:ksoup-html:0.3.1")
 //            implementation("io.coil-kt.coil3:coil-compose:3.0.0-SNAPSHOT")
         }
         desktopMain.dependencies {

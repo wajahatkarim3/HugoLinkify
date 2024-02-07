@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +31,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import data.UrlPreview
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @OptIn(ExperimentalResourceApi::class)
@@ -56,6 +59,11 @@ fun LinkifySection(
     modifier: Modifier
 ) {
     var txtUrl by remember { mutableStateOf("") }
+    var previewImage by remember { mutableStateOf("") }
+    var previewTitle by remember { mutableStateOf("") }
+    var previewDescription by remember { mutableStateOf("") }
+    var previewHost by remember { mutableStateOf("") }
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = modifier.fillMaxHeight()
@@ -83,7 +91,18 @@ fun LinkifySection(
 
         Button(
             onClick = {
+                coroutineScope.launch {
+                    txtUrl = "https://wajahatkarim.com/2022/11/reduce-screen-time-social-life/"
+                    val urlPreviewData = UrlPreview.fetchData(txtUrl)
 
+                    urlPreviewData?.let {
+                        previewHost = urlPreviewData.host
+                        previewImage = urlPreviewData.thumbnailUrl ?: ""
+                        previewTitle = urlPreviewData.title
+                        previewDescription = urlPreviewData.description
+                    }
+
+                }
             },
             modifier = Modifier.fillMaxWidth()
                 .padding(top = 12.dp)
@@ -94,9 +113,19 @@ fun LinkifySection(
             )
         }
 
-        LinkPreviewBox()
+        LinkPreviewBox(
+            image = previewImage,
+            title = previewTitle,
+            hostUrl = previewHost,
+            description = previewDescription
+        )
 
-        ShortCodeBox()
+        ShortCodeBox(
+            image = previewImage,
+            title = previewTitle,
+            hostUrl = previewHost,
+            description = previewDescription
+        )
 
         CreditFooter()
     }
