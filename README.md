@@ -30,7 +30,7 @@
 ## How to Use
 Check the website https://wajahatkarim3.github.io/HugoLinkify/
 
-![](https://user-images.githubusercontent.com/8867121/154115910-8e2d2661-97c0-4b5a-b27e-76857533afe6.mp4)
+![](https://github.com/wajahatkarim3/HugoLinkify/blob/main/screenshots/demo.png)
 
 <br/>
 <br/>
